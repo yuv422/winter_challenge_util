@@ -6,7 +6,7 @@
 void dump_file(FILE *archive, uint32 size, uint32 offset, char *filename) {
     fseek(archive, offset, SEEK_SET);
 
-    FILE *out = fopen(filename, "wb");
+    FILE *out = file_open(filename, "wb");
     for(int i = 0; i < size; i++) {
         uint8 byte = file_read1(archive);
         fwrite(&byte, 1, 1, out);
@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    FILE *file = fopen(argv[1], "r");
+    FILE *file = file_open(argv[1], "r");
 
     uint32 offset = find_offset(file);
 

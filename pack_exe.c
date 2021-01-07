@@ -29,7 +29,7 @@ void encodeFilename(unsigned char *filename) {
 }
 
 void writeFileToArchive(char *filename, FILE *outfile) {
-    FILE *inputFile = fopen(filename, "r");
+    FILE *inputFile = file_open(filename, "r");
     uint32 size = file_get_size(filename);
     for (int i = 0; i < size; i++) {
         uint8 byte = file_read1(inputFile);
@@ -41,10 +41,11 @@ void writeFileToArchive(char *filename, FILE *outfile) {
 int main(int argc, char *argv[]) {
     if (argc < 4) {
         printf("Usage: %s originalEXEFile outputFile [files to be packed]\n", argv[0]);
+        return 1;
     }
 
-    FILE *inputFile = fopen(argv[1], "r");
-    FILE *outputFile = fopen(argv[2], "wb");
+    FILE *inputFile = file_open(argv[1], "r");
+    FILE *outputFile = file_open(argv[2], "wb");
 
     uint32 exeSize = getEXESize(inputFile);
     uint16 numEntries = argc - 3;

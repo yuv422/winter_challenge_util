@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include "defs.h"
 
+FILE *file_open(char *filename, char *mode);
 uint8 file_read1(FILE *file);
 uint16 file_read2(FILE *file);
 uint32 file_read4(FILE *file);

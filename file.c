@@ -2,6 +2,7 @@
 // Created by Eric Fry on 7/1/21.
 //
 
+#include <stdlib.h>
 #include "file.h"
 
 uint8 file_read1(FILE *file) {
@@ -49,9 +50,18 @@ void file_write4(uint32 double_word, FILE *file)
 }
 
 uint32 file_get_size(char *filename) {
-    FILE *fp = fopen(filename, "r");
+    FILE *fp = file_open(filename, "r");
     fseek(fp, 0, SEEK_END);
     uint32 size = ftell(fp);
     fclose(fp);
     return size;
+}
+
+FILE *file_open(char *filename, char *mode) {
+    FILE *fp = fopen(filename, "r");
+    if (fp == NULL) {
+        printf("Failed to open %d with mode: %s", filename, mode);
+        exit(1);
+    }
+    return fp;
 }
